@@ -10,6 +10,9 @@ import CEOContent from "./pages/user/CEOContent";
 import {EmpCheckRoute} from './routes/EmpCheckRoute';
 import Timesheet from "./pages/user/Timesheet";
 import Attendance from "./pages/user/Attendance";
+import ApplyLeave from "./pages/user/ApplyLeave";
+import UpdateUser from "./pages/user/UpdateUser";
+import HolidayList from "./pages/user/HolidayList";
 
 function App() {
   const { user } = useAuth();
@@ -42,6 +45,9 @@ function App() {
         <Route path="/CEOContent" element={<CEOContent />} />
         <Route path="/timesheet" element={<Timesheet />} />
         <Route path="/attendance" element={<Attendance />} />
+        <Route path="/apply_leave" element={<ApplyLeave />} />
+        <Route path="/update_user" element={<UpdateUser />} />
+        <Route path="/holiday-list" element={<HolidayList />} />
       </Routes>
       <EmpCheckRoute element={<Footer />} />
     </>

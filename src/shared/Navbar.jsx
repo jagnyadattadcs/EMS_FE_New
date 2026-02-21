@@ -91,7 +91,7 @@ const Navbar = () => {
                         <GiHamburgerMenu size={28} />
                     </div>
                     <a href='https://dayacs.com/' target='_blank' rel='noopener noreferrer'>
-                        <img src="./dayalogo.png" alt="dayacslogo" className='w-32 md:w-40 h-10 md:h-12' />
+                        <img src="./dayalogo.png" alt="dayacslogo" className='w-32 md:w-40 h-10 md:h-14' />
                     </a>
                     <div className="text-white hidden sm:block">
                         <p className='text-[#8BD005] font-semibold text-sm md:text-base'>{time.toLocaleTimeString()}</p>
@@ -247,7 +247,7 @@ const Navbar = () => {
                         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200">
                             <div className="text-xs text-gray-500 text-center">
                                 <p>Employee Management System</p>
-                                <p className="mt-1">Version 1.0.0</p>
+                                <p className="mt-1">Version 2.5.3</p>
                             </div>
                         </div>
                     </div>
