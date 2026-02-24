@@ -4,9 +4,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { CgProfile } from "react-icons/cg";
 import { IoClose } from "react-icons/io5";
 import { FiLogOut } from "react-icons/fi";
-import { MdOutlineAssignment, MdOutlineCheckCircle, MdOutlineCalendarToday, MdOutlineUpdate, MdOutlineFestival } from "react-icons/md";
+import { MdOutlinePeople, MdOutlineAssignment, MdOutlinePersonAdd, MdOutlineAssistantPhoto, 
+         MdOutlineFestival, MdOutlineAddCircle, MdOutlineListAlt, MdOutlineAddBox, 
+         MdOutlineDeleteOutline, 
+         MdOutlineCheckCircle, MdOutlineCalendarToday, MdOutlineUpdate} from "react-icons/md";
 import { useAuth } from '../contexts/AuthContext';
-import { toast } from 'react-toastify';
 
 const Navbar = () => {
     const [time, setTime] = useState(new Date());
@@ -79,6 +81,20 @@ const Navbar = () => {
         { name: 'Holiday List', icon: <MdOutlineFestival size={20} />, path: '/holiday-list' },
     ];
 
+    const adminSidebarLinks = [
+        {name: "Employee List", icon: <MdOutlinePeople size={20} />, path: '/admin/home'},
+        {name: "Attendance", icon: <MdOutlineAssignment size={20} />, path: '/admin/attendance'},
+        {name: "Register New Employee", icon: <MdOutlinePersonAdd size={20} />, path: '/admin/register'},
+        {name: "Leave Applications", icon: <MdOutlineAssistantPhoto size={20} />, path: '/admin/leave_application'},
+        {name: "Holiday List", icon: <MdOutlineFestival size={20} />, path: '/admin/holiday-list'},
+        {name: "Add Holiday", icon: <MdOutlineAddCircle size={20} />, path: '/admin/add-holiday'},
+        {name: "Project List", icon: <MdOutlineListAlt size={20} />, path: '/admin/project-list'},
+        {name: "Add Project", icon: <MdOutlineAddBox size={20} />, path: '/admin/add-project'},
+        {name: "Deleted Employees", icon: <MdOutlineDeleteOutline size={20} />, path: '/admin/deleted-emps'},
+    ]
+
+    if(!user) return null;
+
     return (
         <>
             {/* Navbar */}
@@ -91,7 +107,7 @@ const Navbar = () => {
                         <GiHamburgerMenu size={28} />
                     </div>
                     <a href='https://dayacs.com/' target='_blank' rel='noopener noreferrer'>
-                        <img src="./dayalogo.png" alt="dayacslogo" className='w-32 md:w-40 h-10 md:h-14' />
+                        <img src="/dayalogo.png" alt="dayacslogo" className='w-32 md:w-40 h-10 md:h-14' />
                     </a>
                     <div className="text-white hidden sm:block">
                         <p className='text-[#8BD005] font-semibold text-sm md:text-base'>{time.toLocaleTimeString()}</p>
@@ -100,26 +116,40 @@ const Navbar = () => {
                 </div>
 
                 <div className='flex items-center gap-4 md:gap-6'>
-                    <Link to='/home' className='text-white hover:text-[#8BD005] transition-colors duration-300 text-sm md:text-base'>
+                    <Link to={`${userRole === "emp" ? "/home":"/admin/home"}`} className='text-white hover:text-[#8BD005] transition-colors duration-300 text-sm md:text-base'>
                         Home
                     </Link>
-                    <Link to='/CEOContent' className='text-white hover:text-[#8BD005] transition-colors duration-300 text-sm md:text-base'>
-                        CEO Content
-                    </Link>
-                    <div 
-                        className='text-white cursor-pointer relative'
-                        onClick={() => setIsProfileOpen(!isProfileOpen)}
-                    >
-                        {!userDp ? (
-                            <img 
-                                src={userDp} 
-                                alt="profile" 
-                                className='w-8 h-8 md:w-10 md:h-10 rounded-full object-cover border-2 border-[#8BD005] hover:scale-105 transition-transform duration-300'
-                            />
-                        ) : (
-                            <CgProfile size={32} className='hover:text-[#8BD005] transition-colors duration-300' />
-                        )}
-                    </div>
+                    {userRole === "emp" ? (
+                        <>
+                            <Link to='/CEOContent' className='text-white hover:text-[#8BD005] transition-colors duration-300 text-sm md:text-base'>
+                                CEO Content
+                            </Link>
+                            <div 
+                                className='text-white cursor-pointer relative'
+                                onClick={() => setIsProfileOpen(!isProfileOpen)}
+                            >
+                                {!userDp ? (
+                                    <img 
+                                        src={userDp} 
+                                        alt="profile" 
+                                        className='w-8 h-8 md:w-10 md:h-10 rounded-full object-cover border-2 border-[#8BD005] hover:scale-105 transition-transform duration-300'
+                                    />
+                                ) : (
+                                    <CgProfile size={32} className='hover:text-[#8BD005] transition-colors duration-300' />
+                                )}
+                            </div>
+                        </>
+                    ):(
+                        <>
+                            <button
+                                onClick={handleLogout}
+                                className="w-full bg-linear-to-r from-red-500 to-red-600 text-white py-2 px-3 rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center gap-2 font-medium transform hover:scale-[1.02] cursor-pointer"
+                            >
+                                <FiLogOut size={20} />
+                                Logout
+                            </button>
+                        </>
+                    )}
                 </div>
             </div>
 
@@ -198,12 +228,12 @@ const Navbar = () => {
                 <div className="fixed inset-0 bg-black/50 z-100">
                     <div 
                         ref={sidebarRef}
-                        className="fixed left-0 top-0 h-full w-72 bg-white shadow-2xl transform transition-all duration-300 animate-slideFromLeft"
+                        className="fixed left-0 top-0 h-full w-72 bg-white shadow-2xl transform transition-all duration-300 animate-slideFromLeft flex flex-col"
                     >
-                        {/* Sidebar Header */}
-                        <div className="bg-linear-to-r from-[#1B2749] to-[#2a3a5e] p-6">
+                        {/* Sidebar Header - Fixed at top */}
+                        <div className="bg-linear-to-r from-[#1B2749] to-[#2a3a5e] p-6 shrink-0">
                             <div className="flex justify-between items-center">
-                                <h2 className="text-xl font-bold text-white">Menu</h2>
+                                <h2 className="text-xl font-bold text-white">{userRole === "emp" ? "Menu" : "Admin Dashboard"}</h2>
                                 <button 
                                     onClick={() => setIsSidebarOpen(false)}
                                     className="text-white/80 hover:text-white transition-colors"
@@ -211,40 +241,61 @@ const Navbar = () => {
                                     <IoClose size={24} />
                                 </button>
                             </div>
-                            <div className="mt-4 flex items-center gap-3">
-                                {!userDp ? (
-                                    <img src={userDp} alt={userName} className="w-10 h-10 rounded-full border-2 border-[#8BD005]" />
-                                ) : (
-                                    <div className="w-10 h-10 rounded-full bg-[#8BD005] flex items-center justify-center text-white font-bold">
-                                        {userName?.charAt(0).toUpperCase()}
+                            {
+                                userRole === "emp" && (
+                                    <div className="mt-4 flex items-center gap-3">
+                                        {!userDp ? (
+                                            <img src={userDp} alt={userName} className="w-10 h-10 rounded-full border-2 border-[#8BD005]" />
+                                        ) : (
+                                            <div className="w-10 h-10 rounded-full bg-[#8BD005] flex items-center justify-center text-white font-bold">
+                                                {userName?.charAt(0).toUpperCase()}
+                                            </div>
+                                        )}
+                                        <div>
+                                            <p className="text-white font-medium">{userName}</p>
+                                            <p className="text-[#8BD005] text-sm">{userRole == "emp" && "Employee"}</p>
+                                        </div>
                                     </div>
-                                )}
-                                <div>
-                                    <p className="text-white font-medium">{userName}</p>
-                                    <p className="text-[#8BD005] text-sm">{userRole == "emp" && "Employee"}</p>
-                                </div>
+                                )
+                            }
+                        </div>
+
+                        {/* Sidebar Links - Scrollable area */}
+                        <div className="flex-1 overflow-y-auto py-4">
+                            <div className="px-4">
+                                {userRole === "emp" && sidebarLinks.map((link, index) => (
+                                    <Link
+                                        key={index}
+                                        to={link.path}
+                                        onClick={() => setIsSidebarOpen(false)}
+                                        className="flex items-center gap-3 p-3 mb-2 text-gray-700 hover:bg-[#1B2749] hover:text-white rounded-lg transition-all duration-300 group"
+                                    >
+                                        <span className="text-[#1B2749] group-hover:text-[#8BD005] transition-colors">
+                                            {link.icon}
+                                        </span>
+                                        <span className="font-medium">{link.name}</span>
+                                    </Link>
+                                ))}
+                                {
+                                userRole === "admin" &&  adminSidebarLinks.map((link, index) => (
+                                        <Link
+                                            key={index}
+                                            to={link.path}
+                                            onClick={() => setIsSidebarOpen(false)}
+                                            className="flex items-center gap-3 p-3 mb-2 text-gray-700 hover:bg-[#1B2749] hover:text-white rounded-lg transition-all duration-300 group"
+                                        >
+                                            <span className="text-[#1B2749] group-hover:text-[#8BD005] transition-colors">
+                                                {link.icon}
+                                            </span>
+                                            <span className="font-medium">{link.name}</span>
+                                        </Link>
+                                    ))
+                                }
                             </div>
                         </div>
 
-                        {/* Sidebar Links */}
-                        <div className="p-4">
-                            {sidebarLinks.map((link, index) => (
-                                <Link
-                                    key={index}
-                                    to={link.path}
-                                    onClick={() => setIsSidebarOpen(false)}
-                                    className="flex items-center gap-3 p-3 mb-2 text-gray-700 hover:bg-[#1B2749] hover:text-white rounded-lg transition-all duration-300 group"
-                                >
-                                    <span className="text-[#1B2749] group-hover:text-[#8BD005] transition-colors">
-                                        {link.icon}
-                                    </span>
-                                    <span className="font-medium">{link.name}</span>
-                                </Link>
-                            ))}
-                        </div>
-
-                        {/* Sidebar Footer */}
-                        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200">
+                        {/* Sidebar Footer - Fixed at bottom */}
+                        <div className="shrink-0 p-4 border-t border-gray-200 bg-white">
                             <div className="text-xs text-gray-500 text-center">
                                 <p>Employee Management System</p>
                                 <p className="mt-1">Version 2.5.3</p>

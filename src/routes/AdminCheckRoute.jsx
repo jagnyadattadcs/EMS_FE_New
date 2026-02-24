@@ -1,10 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
-export const AdminCheckRoute = ({element}) => {
-    const role = localStorage.getItem("role");
-    const [admin, setAdmin] = useState(false)
-    useEffect(() => {
-        if (role === "admin" || role == "admin") setAdmin(true)
-    }, [])
-    return admin ? element : <></>
-}
+export const AdminCheckRoute = () => {
+  const { user } = useAuth();
+  const userRole = localStorage.getItem('role');
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (userRole !== "admin") {
+    return <Navigate to="/home" replace />;
+  }
+
+  return <Outlet />;
+};

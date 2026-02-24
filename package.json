@@ -12,6 +12,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.2.0",
     "axios": "^1.13.5",
+    "date-fns": "^4.1.0",
     "react": "^19.2.0",
     "react-calendar": "^6.0.0",
     "react-dom": "^19.2.0",
@@ -20,6 +21,7 @@
     "react-slick": "^0.31.0",
     "react-toastify": "^11.0.5",
     "tailwindcss": "^4.2.0",
+    "uuid": "^13.0.0",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
