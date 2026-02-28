@@ -74,7 +74,7 @@ const UpdateDetails = ({ setShowForm, id }) => {
                     
                     // Set preview if there's an existing image
                     if (userData.dp) {
-                        setPreviewImage(`${BASE_URL}${userData.dp}`);
+                        setPreviewImage(`${userData.dp}`);
                     }
                 }
             } catch (error) {

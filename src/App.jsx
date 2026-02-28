@@ -84,7 +84,7 @@ function App() {
           }
         />
       </Routes>
-      <EmpCheckRoute element={<Footer />} />
+      {/* <EmpCheckRoute element={<Footer />} /> */}
     </>
   );
 }

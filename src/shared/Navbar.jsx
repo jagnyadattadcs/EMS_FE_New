@@ -66,6 +66,7 @@ const Navbar = () => {
     const handleLogout = async () => {
         try {
             await logout();
+            setIsProfileOpen(false);
             navigate('/login');
             // toast.success('Logged out successfully');
         } catch (error) {
@@ -128,7 +129,7 @@ const Navbar = () => {
                                 className='text-white cursor-pointer relative'
                                 onClick={() => setIsProfileOpen(!isProfileOpen)}
                             >
-                                {!userDp ? (
+                                {userDp ? (
                                     <img 
                                         src={userDp} 
                                         alt="profile" 
@@ -176,7 +177,7 @@ const Navbar = () => {
                         {/* Profile Content */}
                         <div className="p-6">
                             <div className="flex flex-col items-center mb-6">
-                                {!userDp ? (
+                                {userDp ? (
                                     <img 
                                         src={userDp} 
                                         alt={userName}
@@ -244,7 +245,7 @@ const Navbar = () => {
                             {
                                 userRole === "emp" && (
                                     <div className="mt-4 flex items-center gap-3">
-                                        {!userDp ? (
+                                        {userDp ? (
                                             <img src={userDp} alt={userName} className="w-10 h-10 rounded-full border-2 border-[#8BD005]" />
                                         ) : (
                                             <div className="w-10 h-10 rounded-full bg-[#8BD005] flex items-center justify-center text-white font-bold">

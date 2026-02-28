@@ -56,11 +56,12 @@ const LeaveApplication = () => {
             setLoading(true);
             try {
                 let url;
-                if (userId) {
-                    url = `${BASE_URL}/users/leave/view_particular_leaves?status=${option}&userId=${userId}`;
-                } else {
-                    url = `${BASE_URL}/users/leave/view_leaves?status=${option}`;
-                }
+                // if (userId) {
+                //     url = `${BASE_URL}/users/leave/view_particular_leaves?status=${option}&userId=${userId}`;
+                // } else {
+                //     url = `${BASE_URL}/users/leave/view_leaves?status=${option}`;
+                // }
+                url = `${BASE_URL}/users/leave/view_leaves?status=${option}`;
                 
                 const res = await axios.get(url, { headers });
                 

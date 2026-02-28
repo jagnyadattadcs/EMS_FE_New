@@ -209,7 +209,7 @@ const UpdateUser = () => {
                                     </label>
                                     <div className="relative group">
                                         <img 
-                                            src={`${BASE_URL}${formData.dp}`} 
+                                            src={`${formData.dp}`} 
                                             alt="Current Profile" 
                                             className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg group-hover:scale-105 transition-transform duration-300"
                                         />

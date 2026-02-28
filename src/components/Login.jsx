@@ -71,7 +71,7 @@ const Login = () => {
         <img
           src="./WBack.jpeg"
           alt="Daya Consultancy Services"
-          className="h-12 object-contain"
+          className="h-14 object-contain"
         />
       </div>
 
